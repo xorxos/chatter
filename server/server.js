@@ -25,27 +25,7 @@ dotenv.config();
 app.use(express.json());
 app.use(cors());
 
-app.use(helmet());
-
-app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: false,
-    directives: {
-      defaultSrc: ["'self'", "http://localhost:5000"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      connectSrc: [
-        "'self'",
-        "http://localhost:5000",
-        "https://chatter.parkerleavitt.com",
-        "http://chatter.parkerleavitt.com",
-        "https://chatter-qn2v.onrender.com",
-        "http://chatter-qn2v.onrender.com",
-      ],
-      styleSrc: ["'self'", "https://fonts.googleapis.com/"],
-    },
-    reportOnly: true,
-  })
-);
+app.use(helmet({contentSecurityPolicy: false}));
 
 app.use(xss());
 app.use(mongoSanitize());
