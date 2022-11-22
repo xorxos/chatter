@@ -44,6 +44,10 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://127.0.0.1:5173",
+      "http://chatter.parkerleavitt.com",
+      "https://chatter.parkerleavitt.com",
+      "http://chatter-qn2v.onrender.com/",
+      "https://chatter-qn2v.onrender.com/",
       "http://localhost:3000",
       "http://localhost:5000",
     ],
