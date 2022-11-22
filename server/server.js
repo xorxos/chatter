@@ -33,7 +33,7 @@ app.use(
     directives: {
       "default-src": ["'self'", "http://localhost:5000"],
       "font-src": ["'self'", "https://fonts.gstatic.com"],
-      "connect-src": ["'self'", "http://localhost:5000", "wss"],
+      "connect-src": ["'self'", "http://localhost:5000"],
       "style-src": ["'self'", "https://fonts.googleapis.com/"],
     },
     reportOnly: true,
