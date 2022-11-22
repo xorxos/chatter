@@ -4,6 +4,10 @@ import connectDB from "./db/connect.js";
 import http from "http";
 import cors from "cors";
 
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+
 import helmet from "helmet";
 import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
@@ -30,6 +34,9 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const PORT = process.env.PORT || 5000;
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -81,6 +88,10 @@ io.on("connection", (socket) => {
 
 app.get("/", (req, res) => {
   res.json({ msg: "Welcome to the server!" });
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 
 const start = async () => {
