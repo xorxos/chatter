@@ -33,7 +33,12 @@ app.use(
     directives: {
       defaultSrc: ["'self'", "http://localhost:5000"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      connectSrc: ["'self'", "http://localhost:5000"],
+      connectSrc: [
+        "'self'",
+        "http://localhost:5000",
+        "https://chatter.parkerleavitt.com",
+        "https://chatter-qn2v.onrender.com",
+      ],
       styleSrc: ["'self'", "https://fonts.googleapis.com/"],
     },
     reportOnly: true,
