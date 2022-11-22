@@ -31,10 +31,10 @@ app.use(
   helmet.contentSecurityPolicy({
     useDefaults: false,
     directives: {
-      "default-src": ["'self'", "http://localhost:5000"],
-      "font-src": ["'self'", "https://fonts.gstatic.com"],
-      "connect-src": ["'self'", "http://localhost:5000"],
-      "style-src": ["'self'", "https://fonts.googleapis.com/"],
+      defaultSrc: ["'self'", "http://localhost:5000"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      connectSrc: ["'self'", "http://localhost:5000"],
+      styleSrc: ["'self'", "https://fonts.googleapis.com/"],
     },
     reportOnly: true,
   })
