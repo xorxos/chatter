@@ -42,7 +42,12 @@ app.use(express.static(path.resolve(__dirname, "../client/dist")));
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://chatter.parkerleavitt.com", "http://127.0.0.1:5173"],
+    origin: [
+      "https://chatter.parkerleavitt.com",
+      "http://127.0.0.1:5173",
+      "http://localhost:5000",
+      "https://chatter-qn2v.onrender.com/",
+    ],
     methods: ["GET", "POST"],
   },
 });
