@@ -41,7 +41,7 @@ app.use(express.static(path.resolve(__dirname, "../client/dist")));
 app.use(function (req, res, next) {
   res.setHeader(
     'Content-Security-Policy-Report-Only',
-    "default-src 'self'; connect-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
+    "default-src 'self'; connect-src 'self' http://localhost:5000; font-src 'self'; img-src 'self'; script-src 'self' https://fonts.googleapis.com; style-src 'self'; frame-src 'self'"
   );
   next();
 });
