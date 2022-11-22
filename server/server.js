@@ -26,6 +26,21 @@ app.use(express.json());
 app.use(cors());
 
 app.use(helmet());
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "default-src": ["'self'", "http://localhost:5000"],
+      "font-src": ["'self'", "https://fonts.gstatic.com"],
+      "style-src": [
+        "'self'",
+        "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap",
+      ],
+    },
+    reportOnly: true,
+  })
+);
+
 app.use(xss());
 app.use(mongoSanitize());
 
@@ -37,14 +52,6 @@ const PORT = process.env.PORT || 5000;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, "../client/dist")));
-
-app.use(function (req, res, next) {
-  res.setHeader(
-    "Content-Security-Policy-Report-Only",
-    "default-src 'self'; connect-src 'self' http://localhost:5000; font-src 'self' https://fonts.gstatic.com; img-src 'self'; script-src 'self' https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap; style-src 'self'; frame-src 'self'"
-  );
-  next();
-});
 
 const server = http.createServer(app);
 const io = new Server(server, {
