@@ -36,7 +36,7 @@ if (process.env.NODE_ENV !== "production") {
 const PORT = process.env.PORT || 5000;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname, "../client/build")));
+app.use(express.static(path.resolve(__dirname, "../client/dist")));
 
 const server = http.createServer(app);
 const io = new Server(server, {
