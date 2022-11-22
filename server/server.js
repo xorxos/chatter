@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/connect.js";
-import http from "http";
 import cors from "cors";
 
 import { dirname } from "path";
@@ -15,6 +14,8 @@ import mongoSanitize from "express-mongo-sanitize";
 import "express-async-errors";
 
 import morgan from "morgan";
+
+import {createServer} from "http";
 import { Server } from "socket.io";
 
 import Message from "./models/Message.js";
@@ -39,7 +40,7 @@ const PORT = process.env.PORT || 5000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, "../client/dist")));
 
-const server = http.createServer(app);
+const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: [
@@ -98,7 +99,7 @@ app.get("*", (req, res) => {
 const start = async () => {
   try {
     connectDB(process.env.MONGO_URL);
-    io.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}`);
     });
   } catch (error) {
