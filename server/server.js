@@ -29,10 +29,11 @@ app.use(helmet());
 
 app.use(
   helmet.contentSecurityPolicy({
+    useDefaults: false,
     directives: {
       "default-src": ["'self'", "http://localhost:5000"],
       "font-src": ["'self'", "https://fonts.gstatic.com"],
-      "connect-src": ["'self'", "http://localhost:5000"],
+      "connect-src": ["'self'", "http://localhost:5000", "wss"],
       "style-src": ["'self'", "https://fonts.googleapis.com/"],
     },
     reportOnly: true,
