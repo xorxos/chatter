@@ -15,7 +15,7 @@ import "express-async-errors";
 
 import morgan from "morgan";
 
-import {createServer} from "http";
+import { createServer } from "http";
 import { Server } from "socket.io";
 
 import Message from "./models/Message.js";
@@ -47,6 +47,8 @@ const io = new Server(server, {
       "http://127.0.0.1:5173",
       "http://localhost:5000",
       "http://localhost:10000",
+      "https://chatter.parkerleavitt.com",
+      "https://chatter-qn2v.onrender.com/",
     ],
     methods: ["GET", "POST", "OPTIONS"],
   },
