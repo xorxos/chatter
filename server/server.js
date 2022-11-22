@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/connect.js";
 import http from "http";
+import cors from "cors";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -22,6 +23,7 @@ const app = express();
 
 dotenv.config();
 app.use(express.json());
+app.use(cors());
 
 app.use(helmet({ contentSecurityPolicy: false }));
 
@@ -38,7 +40,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, "../client/dist")));
 
 const server = http.createServer(app);
-const io = new Server(server, {});
+const io = new Server(server, {
+  cors: {
+    origin: ["https://chatter.parkerleavitt.com", "http://127.0.0.1:5173"],
+  },
+});
 
 const WELCOME_MESSAGE = {
   author: { rgbColor: "darkorchid", userName: "WelcomeBot" },
