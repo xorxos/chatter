@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./db/connect.js";
 import http from "http";
-import cors from "cors";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -23,9 +22,8 @@ const app = express();
 
 dotenv.config();
 app.use(express.json());
-app.use(cors());
 
-app.use(helmet({contentSecurityPolicy: false}));
+app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(xss());
 app.use(mongoSanitize());
@@ -40,20 +38,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, "../client/dist")));
 
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: [
-      "http://127.0.0.1:5173",
-      "http://chatter.parkerleavitt.com",
-      "https://chatter.parkerleavitt.com",
-      "http://chatter-qn2v.onrender.com/",
-      "https://chatter-qn2v.onrender.com/",
-      "http://localhost:3000",
-      "http://localhost:5000",
-    ],
-    methods: ["GET", "POST"],
-  },
-});
+const io = new Server(server, {});
 
 const WELCOME_MESSAGE = {
   author: { rgbColor: "darkorchid", userName: "WelcomeBot" },
