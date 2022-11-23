@@ -28,9 +28,8 @@ const AppProvider: React.FC<Props> = ({ children }) => {
         return faker.internet.color(250, 250, 250)
     }
     const connect = () => {
-        return io('https://chatter.parkerleavitt.com:5000', {
-            reconnectionAttempts: 5,
-            rejectUnauthorized: false,
+        return io('http://localhost:5000', {
+            reconnectionAttempts: 3
         })
     }
     const connectChat = () => {
