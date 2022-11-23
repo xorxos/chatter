@@ -28,7 +28,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
         return faker.internet.color(250, 250, 250)
     }
     const connect = () => {
-        return io('http://localhost:5000', {
+        return io('ws://localhost:5000', {
             reconnectionAttempts: 5,
         })
     }
@@ -55,7 +55,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
                 messages,
                 setMessages,
                 connectChat,
-                setUserName
+                setUserName,
             }}
         >
             {children}
