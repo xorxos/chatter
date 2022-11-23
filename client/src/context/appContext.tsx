@@ -30,6 +30,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
     const connect = () => {
         return io('wss://localhost:5000', {
             reconnectionAttempts: 5,
+            rejectUnauthorized: false,
         })
     }
     const connectChat = () => {
