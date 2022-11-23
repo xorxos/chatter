@@ -52,7 +52,6 @@ const io = new Server(server, {
       "https://chatter-qn2v.onrender.com",
       "http://chatter-qn2v:10000",
     ],
-    methods: ["GET", "POST", "OPTIONS"],
   },
 });
 
