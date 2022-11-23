@@ -28,7 +28,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
         return faker.internet.color(250, 250, 250)
     }
     const connect = () => {
-        return io('wss://localhost:5000', {
+        return io('http://chatter-qn2v:10000', {
             reconnectionAttempts: 5,
             rejectUnauthorized: false,
         })
