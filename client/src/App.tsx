@@ -7,8 +7,8 @@ function App() {
         <main className="grid min-h-screen place-items-center">
             <BrowserRouter>
                 <Routes>
+                    <Route path='chat' element={<Chat />} />
                     <Route path='/' element={<UsernameForm />} />
-                    <Route path='/chat' element={<Chat />} />
                 </Routes>
             </BrowserRouter>
         </main>
