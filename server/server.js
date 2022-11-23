@@ -3,10 +3,6 @@ import dotenv from "dotenv";
 import connectDB from "./db/connect.js";
 import cors from "cors";
 
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import path from "path";
-
 import helmet from "helmet";
 import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
@@ -37,9 +33,6 @@ if (process.env.NODE_ENV !== "production") {
 
 const PORT = process.env.PORT || 5000;
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname, "../client/dist")));
-
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
@@ -60,50 +53,46 @@ const WELCOME_MESSAGE = {
   content: "Welcome to Chatter!",
 };
 
-io.on("connection", (socket) => {
-  console.log(`User connected ${socket.id}`);
-
-  socket.on("disconnect", () => {
-    console.log(`User disconnected: ${socket.id}`);
-  });
-
-  socket.on("join", async (data) => {
-    const chat = await Message.find({});
-    io.to(socket.id).emit("load-chat", [...chat]);
-
-    io.to(socket.id).emit("new-message", { ...WELCOME_MESSAGE });
-    io.emit("joined", {
-      author: WELCOME_MESSAGE.author,
-      content: `${data.userName} has joined the chat!`,
-    });
-  });
-
-  socket.on("message", async (data) => {
-    const { content, author } = data;
-
-    if (!content || !author) return;
-
-    await Message.create({
-      userName: author.userName,
-      rgbColor: author.rgbColor,
-      content,
-    })
-      .then()
-      .catch((err) => console.log(err));
-
-    io.emit("new-message", { author, content });
-  });
-});
-
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/dist", "index.html"));
-});
-
 const start = async () => {
   try {
     connectDB(process.env.MONGO_URL);
     server.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}`);
+
+      io.on("connection", (socket) => {
+        console.log(`User connected ${socket.id}`);
+
+        socket.on("disconnect", () => {
+          console.log(`User disconnected: ${socket.id}`);
+        });
+
+        socket.on("join", async (data) => {
+          const chat = await Message.find({});
+          io.to(socket.id).emit("load-chat", [...chat]);
+
+          io.to(socket.id).emit("new-message", { ...WELCOME_MESSAGE });
+          io.emit("joined", {
+            author: WELCOME_MESSAGE.author,
+            content: `${data.userName} has joined the chat!`,
+          });
+        });
+
+        socket.on("message", async (data) => {
+          const { content, author } = data;
+
+          if (!content || !author) return;
+
+          await Message.create({
+            userName: author.userName,
+            rgbColor: author.rgbColor,
+            content,
+          })
+            .then()
+            .catch((err) => console.log(err));
+
+          io.emit("new-message", { author, content });
+        });
+      });
     });
   } catch (error) {
     console.log(error);
