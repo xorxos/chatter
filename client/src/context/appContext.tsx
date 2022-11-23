@@ -28,7 +28,7 @@ const AppProvider: React.FC<Props> = ({ children }) => {
         return faker.internet.color(250, 250, 250)
     }
     const connect = () => {
-        return io('https://chatter-qn2v.onrender.com:5000', {
+        return io('https://chatter-qn2v.onrender.com', {
             reconnectionAttempts: 3
         })
     }
